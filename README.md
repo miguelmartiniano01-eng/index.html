@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
     <meta charset="UTF-8">
     <title>FTF Custom Values - Dark Edition</title>
 
@@ -17,6 +16,21 @@
     <link rel="apple-touch-icon" href="https://via.placeholder.com/192">
     
     <style>
+        /* Reset e Configurações Gerais Baseadas nas Imagens */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0b0c10;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding: 20px;
+        }
+
+        /* Classes de Controle do Modo Print */
         .hide-mode #criador-form,
         .hide-mode .btn-aba-container,
         .hide-mode #btn-exportar-container,
@@ -25,101 +39,293 @@
         .hide-mode .btn-acoes-card,
         .hide-mode #btn-limpar-tudo { display: none !important; }
 
-        .form-tabs { display: flex; gap: 5px; margin-bottom: 15px; border-bottom: 1px solid #1a2235; padding-bottom: 8px; }
-        .form-tab-btn { background: transparent; color: #62697e; border: none; padding: 6px 12px; cursor: pointer; font-weight: bold; font-size: 13px; border-radius: 4px; }
-        .form-tab-btn.active { background: #1c2336; color: #ffa502; border: 1px solid #2d3854; }
+        /* Título Principal */
+        .main-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .main-header h1 {
+            color: #ffa502;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .main-header p {
+            color: #62697e;
+            font-size: 14px;
+        }
+
+        /* --- TOOLBAR SUPERIOR (Estilo Foto 2) --- */
+        .toolbar-container {
+            max-width: 950px;
+            margin: 0 auto 20px auto;
+            background-color: #14171f;
+            border-bottom: 2px solid #ffa502;
+            padding: 10px 16px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .toolbar-left, .toolbar-right {
+            display: flex;
+            gap: 10px;
+        }
+        .ui-btn {
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #ffffff;
+            transition: background 0.2s;
+        }
+        #togglePrintBtn { background-color: #1c2336; color: #ffa502; border: 1px solid #2d3854; }
+        #togglePrintBtn:hover { background-color: #252f47; }
+        #btn-limpar-tudo { background-color: #ff4757; color: white; }
+        #btn-limpar-tudo:hover { background-color: #ff6b81; }
+
+        /* --- INPUTS & CAMPOS DE PESQUISA --- */
+        .search-wrapper {
+            max-width: 500px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        .input-style {
+            background: #121826;
+            color: #fff;
+            border: 1px solid #232f4b;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-style:focus {
+            border-color: #ffa502;
+        }
+        #barraPesquisa { flex: 2; }
+        #ordenacaoLista { flex: 1; font-weight: bold; cursor: pointer; }
+
+        /* --- FORMULÁRIO DE CRIAÇÃO (Estilo Moderno e Compacto) --- */
+        #criador-form {
+            background-color: #14171f;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #282e3d;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        .form-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #232834;
+            padding-bottom: 10px;
+        }
+        .form-tab-btn {
+            background: transparent;
+            color: #62697e;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .form-tab-btn.active {
+            background: #1c2336;
+            color: #ffa502;
+            border: 1px solid #2d3854;
+        }
+        .form-section h3 {
+            color: #ffa502;
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+        .form-label {
+            color: #8fa0c4;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        .form-input-full {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: #ffa502;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover { background: #ffb830; }
+        .btn-massa { background: #2ed573; color: white; }
+        .btn-massa:hover { background: #26af5f; }
+
+        /* --- ABAS DE FILTRAGEM (Estilo Customizado das Fotos) --- */
+        .btn-aba-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            background-color: #14171f;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #232834;
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-aba {
+            background: transparent;
+            color: #62697e;
+            border: 1px solid transparent;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        #btn-exportar-container { text-align: center; margin-bottom: 25px; }
+        .btn-backup { background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
+
+        /* --- GRID DOS CARDS DE ITEM --- */
+        #titulo-secao {
+            max-width: 950px;
+            margin: 0 auto 15px auto;
+            color: #fff;
+            font-size: 20px;
+            border-left: 4px solid #ffa502;
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        #container-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+            gap: 14px;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 5px 0;
+        }
     </style>
 </head>
-<body style="background-color: #060913; color: #ffffff; font-family: sans-serif; padding: 20px; margin: 0;">
+<body>
 
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h1 style="color: #ffa502; font-size: 42px; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px;">FTF Custom Values 👑</h1>
-        <p style="color: #62697e; margin: 0;">O seu ranking personalizado, justo e sem manipulação</p>
+    <div class="main-header">
+        <h1>FTF Custom Values 👑</h1>
+        <p>O seu ranking personalizado, justo e sem manipulação</p>
     </div>
 
-    <div style="text-align: center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
-        <button id="togglePrintBtn" onclick="togglePrintMode()" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">Modo Print</button>
-        <button id="btn-limpar-tudo" onclick="resetarParaPadraoCodigo()" style="background: #ff4757; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">⚠️ Restaurar Tudo da Lista</button>
+    <div class="toolbar-container" id="toolbar-menu">
+        <div class="toolbar-left">
+            <button id="togglePrintBtn" onclick="togglePrintMode()">Modo Print</button>
+        </div>
+        <div class="toolbar-right">
+            <button id="btn-limpar-tudo" class="ui-btn" onclick="resetarParaPadraoCodigo()">⚠️ Restaurar Tudo da Lista</button>
+        </div>
     </div>
 
-    <div id="search-container" style="max-width: 450px; margin: 0 auto 20px auto; text-align: center;">
-        <input type="text" id="barraPesquisa" placeholder="🔍 Pesquisar marreta pelo nome..." oninput="carregarCardsSalvos()" style="width: 95%; padding: 12px; background: #121826; color: #fff; border: 1px solid #ffa502; border-radius: 8px; font-size: 15px;">
-    </div>
-
-    <div id="criador-form" style="background-color: #0b0f19; padding: 20px; border-radius: 10px; border: 1px solid #1a2235; max-width: 450px; margin: 0 auto 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+    <div class="search-wrapper" id="search-container">
+        <input type="text" id="barraPesquisa" class="input-style" placeholder="🔍 Pesquisar marreta pelo nome..." oninput="carregarCardsSalvos()">
         
+        <select id="ordenacaoLista" class="input-style" onchange="ordenarEAtualizar()">
+            <option value="padrao">🔢 Ordem Padrão</option>
+            <option value="nome-az">🔤 Nome (A-Z)</option>
+            <option value="nome-za">🔤 Nome (Z-A)</option>
+            <option value="valor-alto">📈 Valor (Maior-Menor)</option>
+            <option value="valor-baixo">📉 Valor (Menor-Maior)</option>
+        </select>
+    </div>
+
+    <div id="criador-form">
         <div class="form-tabs">
             <button class="form-tab-btn active" id="tab-unico" onclick="mudarAbaForm('unico')">Individual</button>
             <button class="form-tab-btn" id="tab-massa" onclick="mudarAbaForm('massa')">Adicionar Vários Links Extra 🚀</button>
         </div>
 
-        <div id="form-individual">
-            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 15px;">Adicionar Novo Item Avulso</h3>
-            <input type="text" id="nomeItem" placeholder="Nome do Item" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <input type="text" id="linkImagem" placeholder="Link da Imagem (URL)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <input type="text" id="valorItem" placeholder="Valor em FV" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+        <div id="form-individual" class="form-section">
+            <h3>Adicionar Novo Item Avulso</h3>
+            <input type="text" id="nomeItem" class="input-style form-input-full" placeholder="Nome do Item">
+            <input type="text" id="linkImagem" class="input-style form-input-full" placeholder="Link da Imagem (URL)">
+            <input type="text" id="valorItem" class="input-style form-input-full" placeholder="Valor em FV">
 
-            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Raridade do Item:</label>
-            <select id="raridadeItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <label class="form-label">Raridade do Item:</label>
+            <select id="raridadeItem" class="input-style form-input-full">
                 <option value="legendary">⭐ Legendary</option>
                 <option value="epics">✨ Epics</option>
                 <option value="rares">💎 Rares</option>
                 <option value="commons">📦 Commons</option>
             </select>
 
-            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Demanda (Ex: 4.5):</label>
-            <input type="text" id="demandaNota" placeholder="Ex: 4.5" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <label class="form-label">Demanda (Ex: 4.5):</label>
+            <input type="text" id="demandaNota" class="input-style form-input-full" placeholder="Ex: 4.5">
 
-            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Tendência de Valor:</label>
-            <select id="tendenciaValor" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <label class="form-label">Tendência de Valor:</label>
+            <select id="tendenciaValor" class="input-style form-input-full">
                 <option value="none">Estável / Sem Setinha</option>
                 <option value="subiu">Subiu (↑ Verde)</option>
                 <option value="caiu">Caiu (↓ Vermelho)</option>
                 <option value="corrigido">Corrigido (* Amarelo)</option>
             </select>
 
-            <label style="color: #8fa0c4; font-size: 14px; display: block; margin-bottom: 5px;">Status Especial:</label>
-            <select id="statusItem" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
+            <label class="form-label">Status Especial:</label>
+            <select id="statusItem" class="input-style form-input-full">
                 <option value="none">Nenhum</option>
                 <option value="overpaid">Overpaid For (📈)</option>
                 <option value="underpaid">Underpaid For (📉)</option>
                 <option value="niche">Niche (💎 Raro)</option>
             </select>
 
-            <input type="text" id="estabilidadeItem" placeholder="Estabilidade (Ex: Stable)" style="width: 95%; padding: 10px; margin-bottom: 12px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px;">
-            <button type="button" onclick="criarNovoCard()" style="width: 100%; padding: 12px; background: #ffa502; color: black; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar Item ✨</button>
+            <input type="text" id="estabilidadeItem" class="input-style form-input-full" placeholder="Estabilidade (Ex: Stable)">
+            <button type="button" class="btn-submit" onclick="criarNovoCard()">Adicionar Item ✨</button>
         </div>
 
-        <div id="form-massa" style="display: none;">
-            <h3 style="margin-top: 0; color: #ffa502; margin-bottom: 5px;">Importador Extra</h3>
+        <div id="form-massa" class="form-section" style="display: none;">
+            <h3>Importador Extra</h3>
             <p style="color: #62697e; font-size: 12px; margin-bottom: 15px;">Quer adicionar mais links no futuro? Cole aqui:</p>
-            <textarea id="listaLinksMassa" rows="8" placeholder="Cole os links extras aqui..." style="width: 95%; padding: 10px; background: #121826; color: #fff; border: 1px solid #232f4b; border-radius: 6px; font-family: monospace; font-size: 12px; margin-bottom: 15px; resize: vertical;"></textarea>
-            <button type="button" onclick="importarLinksEmMassa()" style="width: 100%; padding: 12px; background: #2ed573; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px;">Adicionar à Lista 🚀</button>
+            <textarea id="listaLinksMassa" class="input-style form-input-full" rows="8" placeholder="Cole os links extras aqui..." style="resize: vertical; font-family: monospace; font-size: 12px;"></textarea>
+            <button type="button" class="btn-submit btn-massa" onclick="importarLinksEmMassa()">Adicionar à Lista 🚀</button>
         </div>
-
     </div>
 
-    <hr style="border: 1px solid #1a2235; margin: 40px 0;">
+    <hr style="border: null; border-top: 1px solid #1a2235; margin: 30px 0;">
 
-    <div style="max-width: 1200px; margin: 0 auto;">
-        
-        <div class="btn-aba-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; background-color: #0b0f19; padding: 10px; border-radius: 8px; border: 1px solid #1a2235;">
-            <button class="btn-aba" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">👑 Legendaries</button>
-            <button class="btn-aba" id="aba-epics" onclick="filtrarRaridade('epics')" style="background: transparent; color: #a55eea; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">✨ Epics</button>
-            <button class="btn-aba" id="aba-rares" onclick="filtrarRaridade('rares')" style="background: transparent; color: #45aaf2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">💎 Rares</button>
-            <button class="btn-aba" id="aba-commons" onclick="filtrarRaridade('commons')" style="background: transparent; color: #a5b1c2; border: 1px solid transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">📦 Commons</button>
-        </div>
-
-        <div id="btn-exportar-container" style="text-align: center; margin-bottom: 25px;">
-            <button type="button" onclick="exportarLista()" style="background: #2ed573; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">Copiar Backup da Lista 📋</button>
-        </div>
-
-        <h2 id="titulo-secao" style="color: #fff; font-size: 24px; margin-left: 10px; border-left: 4px solid #ffa502; padding-left: 10px; text-transform: uppercase;">📋 LISTA DE ITENS: LEGENDARY</h2>
-        
-        <div id="container-cards" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; padding: 5px;"></div>
+    <div class="btn-aba-container">
+        <button class="btn-aba" id="aba-legendary" onclick="filtrarRaridade('legendary')" style="background: #1c2336; color: #ffa502; border: 1px solid #ffa502;">👑 Legendaries</button>
+        <button class="btn-aba" id="aba-epics" onclick="filtrarRaridade('epics')" style="color: #a55eea;">✨ Epics</button>
+        <button class="btn-aba" id="aba-rares" onclick="filtrarRaridade('rares')" style="color: #45aaf2;">💎 Rares</button>
+        <button class="btn-aba" id="aba-commons" onclick="filtrarRaridade('commons')" style="color: #a5b1c2;">📦 Commons</button>
     </div>
+
+    <div id="btn-exportar-container">
+        <button type="button" class="btn-backup" onclick="exportarLista()">Copiar Backup da Lista 📋</button>
+    </div>
+
+    <h2 id="titulo-secao">📋 LISTA DE ITENS: LEGENDARY</h2>
+    <div id="container-cards"></div>
 
     <script>
+        // O Array original gigante enviado por você foi preservado 100% intacto abaixo:
         const BASE_PADRAO_MARRETAS = [
             {"id":1001,"nome":"1 Billion","imgSrc":"https://i.postimg.cc/RZt4jpTP/1-Billion.webp","raridade":"legendary"},
             {"id":1002,"nome":"2019","imgSrc":"https://i.postimg.cc/HkMdfvtB/2019.webp","raridade":"legendary"},
@@ -317,18 +523,20 @@
         let raridadeAtual = 'legendary'; 
         
         function inicializarBancoDados() {
-            let dadosLocais = [];
+            let dadosLocais = null;
             try {
                 dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v4'));
-            } catch(e) {
+            } catch (e) {
                 dadosLocais = null;
             }
 
-            if(!Array.isArray(dadosLocais) || dadosLocais === null || dadosLocais.length === 0) {
+            if (!Array.isArray(dadosLocais) || dadosLocais.length === 0) {
+                listaDeMarretas = [];
                 forçarInjecaoListaPadrao();
             } else {
                 listaDeMarretas = dadosLocais;
             }
+
             carregarCardsSalvos();
         }
 
@@ -348,10 +556,12 @@
         }
 
         function resetarParaPadraoCodigo() {
-            localStorage.removeItem('ftf_custom_v4');
-            forçarInjecaoListaPadrao();
-            carregarCardsSalvos();
-            alert("Memória limpa! Todas as marretas foram carregadas do zero! 💎");
+            if (confirm("Deseja realmente restaurar todos os itens padrões de fábrica?")) {
+                localStorage.removeItem('ftf_custom_v4');
+                forçarInjecaoListaPadrao();
+                carregarCardsSalvos();
+                alert("Memória limpa! Todas as marretas foram carregadas do zero! 💎");
+            }
         }
 
         function mudarAbaForm(aba) {
@@ -417,6 +627,9 @@
         }
 
         function criarNovoCard() {
+            if (!Array.isArray(listaDeMarretas)) {
+                listaDeMarretas = [];
+            }
             const nome = document.getElementById('nomeItem').value;
             const urlImagem = document.getElementById('linkImagem').value || 'https://via.placeholder.com/150';
             let valor = document.getElementById('valorItem').value || '10';
@@ -455,13 +668,15 @@
             document.getElementById('valorItem').value = '';
         }
 
+        /* --- ATUALIZADO: RENDERIZADOR COMPLETO COM ESTILO CLUBE PREMIUM DAS FOTOS --- */
         function renderizarCardHTML(item) {
             const container = document.getElementById('container-cards');
             const card = document.createElement("div");
 
-            card.style.backgroundColor = '#0b0f19';
-            card.style.border = `1.5px solid #ffa502`; 
-            card.style.borderRadius = '12px';
+            // Customização Exata do Card de Exibição
+            card.style.backgroundColor = '#14171f';
+            card.style.border = `1.5px solid #2d3545`; 
+            card.style.borderRadius = '10px';
             card.style.padding = '12px';
             card.style.width = '100%'; 
             card.style.color = '#fff';
@@ -469,6 +684,7 @@
             card.style.boxSizing = 'border-box';
             card.style.display = 'flex';
             card.style.flexDirection = 'column';
+            card.style.boxShadow = '0 4px 10px rgba(0,0,0,0.4)';
             card.setAttribute('data-id', item.id);
 
             const listaPNG = [
@@ -482,36 +698,42 @@
             const caminhoImagem = item.imgSrc || `./imagens/${item.id}.${extensao}`;
 
             card.innerHTML = `
-                <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 5;">❌</button>
-                <div style="background-color: transparent; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                <button class="btn-deletar" style="position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: #62697e; font-weight: bold; cursor: pointer; font-size: 13px; z-index: 5;">❌</button>
+                
+                <div style="background-color: #0e1117; width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 6px; border: 1px solid #1f2533; padding: 4px;">
                     <img src="${caminhoImagem}" alt="${item.nome}" loading="lazy" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.src='https://placehold.co/150x110/0b0f19/ffffff?text=Sem+Foto'">
                 </div>
-                <span class="txt-posicao-automatica" style="position: absolute; top: 12px; left: 12px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px;">#--</span>
+
+                <span class="txt-posicao-automatica" style="position: absolute; top: 14px; left: 14px; background: #ffa502; color: #000; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.4);">#--</span>
+                
                 <h3 style="margin: 0 0 2px 0; color: #ffffff; font-size: 14px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${item.nome}">${item.nome}</h3>
                 <span style="color: #62697e; font-size: 9px; font-weight: bold; text-transform: uppercase;">${item.raridade || 'legendary'}</span>
+                
                 <div style="margin-top: 10px; font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
                     <div>
-                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase;">VALUE</div>
+                        <div style="color: #4b5266; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">VALUE</div>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="box-valor-dinamico" style="font-size: 16px; font-weight: bold;"></span>
-                            <span class="txt-estabilidade" style="background: #161c2e; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
+                            <span class="box-valor-dinamico" style="font-size: 17px; font-weight: 900;"></span>
+                            <span class="txt-estabilidade" style="background: #121620; color: #8fa0c4; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #232f4b;">${item.templates || 'Stable'}</span>
                         </div>
                     </div>
-                    <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px;"></div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #161c2e; padding-top: 8px;">
-                        <span style="color: #4b5266; font-size: 8px; font-weight: bold;">DEMAND</span>
+                    <div class="box-badge-status" style="display: flex; justify-content: flex-end; margin-top: -2px; min-height: 14px;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px; border-top: 1px solid #1f2533; padding-top: 8px;">
+                        <span style="color: #4b5266; font-size: 8px; font-weight: bold; letter-spacing: 0.5px;">DEMAND</span>
                         <span class="txt-demanda-estrelas" style="font-size: 11px;"></span>
                     </div>
                 </div>
-                <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #161c2e; padding-top: 8px;">
+
+                <div class="btn-acoes-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #1f2533; padding-top: 8px;">
                     <div style="display: flex; gap: 4px;">
-                        <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▲ Subir</button>
-                        <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px;">▼ Descer</button>
+                        <button class="btn-subir" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 5px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">▲ Subir</button>
+                        <button class="btn-descer" style="flex: 1; background: #121826; color: #fff; border: 1px solid #232f4b; padding: 5px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">▼ Descer</button>
                     </div>
-                    <button class="btn-editar" style="background: #1c2336; color: #ffa502; border: 1px solid #2d3854; padding: 4px; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">✏️ Editar</button>
+                    <button class="btn-editar" style="background: #1c2336; color: #ffa502; border: 1px solid #2d3854; padding: 5px; cursor: pointer; border-radius: 4px; font-size: 11px; font-weight: bold;">✏️ Editar</button>
                 </div>
             `;
 
+            // Mantendo a lógica de edição intacta
             card.querySelector('.btn-editar').addEventListener('click', function() {
                 const novoNome = prompt("Mudar nome:", item.nome);
                 const novoValor = prompt("Novo Valor:", item.valor);
@@ -534,10 +756,12 @@
             });
 
             card.querySelector('.btn-deletar').addEventListener('click', function() {
-                listaDeMarretas = listaDeMarretas.filter(m => m.id !== item.id);
-                card.remove();
-                localStorage.setItem('ftf_custom_v4', JSON.stringify(listaDeMarretas));
-                atualizarNumbersVisuais();
+                if (confirm(`Tem certeza que deseja excluir a marreta "${item.nome}"?`)) {
+                    listaDeMarretas = listaDeMarretas.filter(m => m.id !== item.id);
+                    card.remove();
+                    localStorage.setItem('ftf_custom_v4', JSON.stringify(listaDeMarretas));
+                    atualizarNumbersVisuais();
+                }
             });
 
             card.querySelector('.btn-subir').addEventListener('click', function() {
@@ -589,44 +813,86 @@
             let badgeTendencia = '';
             let valorExibido = item.valor || "10";
 
-            if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573;">↑</span>`; }
-            else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757;">↓</span>`; }
-            else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502;">*</span>`; }
+            if (item.tendencia === 'subiu') { badgeTendencia = ` <span style="color: #2ed573; font-weight:bold;">↑</span>`; }
+            else if (item.tendencia === 'caiu') { badgeTendencia = ` <span style="color: #ff4757; font-weight:bold;">↓</span>`; }
+            else if (item.tendencia === 'corrigido') { badgeTendencia = ` <span style="color: #ffa502; font-weight:bold;">*</span>`; }
             
             containerValor.style.color = '#ffa502';
             containerValor.innerHTML = `${valorExibido}${badgeTendencia}`;
 
             if (containerBadge) {
                 containerBadge.innerHTML = '';
-                if (item.status === 'overpaid') containerBadge.innerHTML = `<span style="color: #2ed573; font-size: 8px; font-weight: bold; background: rgba(46, 213, 115, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(46, 213, 115, 0.3);">+ Overpaid</span>`;
-                else if (item.status === 'underpaid') containerBadge.innerHTML = `<span style="color: #ff9f43; font-size: 8px; font-weight: bold; background: rgba(255, 159, 67, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(255, 159, 67, 0.3);">- Underpaid</span>`;
-                else if (item.status === 'niche') containerBadge.innerHTML = `<span style="color: #a55eea; font-size: 8px; font-weight: bold; background: rgba(165, 94, 234, 0.1); padding: 1px 4px; border-radius: 4px; border: 1px solid rgba(165, 94, 234, 0.3);">💎 Niche</span>`;
+                if (item.status === 'overpaid') containerBadge.innerHTML = `<span style="color: #2ed573; font-size: 8px; font-weight: bold; background: rgba(46, 213, 115, 0.1); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(46, 213, 115, 0.3);">+ Overpaid</span>`;
+                else if (item.status === 'underpaid') containerBadge.innerHTML = `<span style="color: #ff9f43; font-size: 8px; font-weight: bold; background: rgba(255, 159, 67, 0.1); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(255, 159, 67, 0.3);">- Underpaid</span>`;
+                else if (item.status === 'niche') containerBadge.innerHTML = `<span style="color: #a55eea; font-size: 8px; font-weight: bold; background: rgba(165, 94, 234, 0.1); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(165, 94, 234, 0.3);">💎 Niche</span>`;
             }
         }
 
         function gerarEstrelasDemanda(cardHTML, notaEstrelas) {
             const containerEstrelas = cardHTML.querySelector('.txt-demanda-estrelas');
             if (!containerEstrelas) return;
+            
             let notaNum = parseFloat(notaEstrelas) || 0;
-            let estrelasTexto = '';
+            let estrelasHTML = '';
+            const estiloEstrela = `font-size: 15px; display: inline-block; position: relative; font-family: sans-serif; line-height: 1; vertical-align: middle; margin: 0 1px;`;
+
             for (let i = 1; i <= 5; i++) {
-                if (notaNum >= i) estrelasTexto += '<span style="color: #ffb830;">⭐</span>';
-                else if (notaNum > i - 1 && notaNum < i) estrelasTexto += '<span>✨</span>';
-                else estrelasTexto += '<span style="color: #323b54;">☆</span>';
+                if (notaNum >= i) {
+                    estrelasHTML += `<span style="${estiloEstrela} color: #ffb830;">★</span>`;
+                } else if (notaNum > i - 1 && notaNum < i) {
+                    estrelasHTML += `
+                        <span style="${estiloEstrela} color: #323b54;">★
+                            <span style="position: absolute; top: 0; left: 0; width: 50%; overflow: hidden; color: #ffb830; font-family: sans-serif;">★</span>
+                        </span>
+                    `;
+                } else {
+                    estrelasHTML += `<span style="${estiloEstrela} color: #323b54;">☆</span>`;
+                }
             }
-            containerEstrelas.innerHTML = estrelasTexto;
+            containerEstrelas.innerHTML = estrelasHTML;
         }
 
-                function carregarCardsSalvos() {
+        function ordenarEAtualizar() {
+            const criterio = document.getElementById('ordenacaoLista').value;
+
+            if (criterio === 'nome-az') {
+                listaDeMarretas.sort((a, b) => (a.nome || "").localeCompare(b.nome || ""));
+            } 
+            else if (criterio === 'nome-za') {
+                listaDeMarretas.sort((a, b) => (b.nome || "").localeCompare(a.nome || ""));
+            } 
+            else if (criterio === 'valor-alto') {
+                listaDeMarretas.sort((a, b) => {
+                    const valA = parseFloat((a.valor || "0").toString().replace(/[^0-9.]/g, '')) || 0;
+                    const valB = parseFloat((b.valor || "0").toString().replace(/[^0-9.]/g, '')) || 0;
+                    return valB - valA;
+                });
+            } 
+            else if (criterio === 'valor-baixo') {
+                listaDeMarretas.sort((a, b) => {
+                    const valA = parseFloat((a.valor || "0").toString().replace(/[^0-9.]/g, '')) || 0;
+                    const valB = parseFloat((b.valor || "0").toString().replace(/[^0-9.]/g, '')) || 0;
+                    return valA - valB;
+                });
+            } 
+            else if (criterio === 'padrao') {
+                const dadosLocais = JSON.parse(localStorage.getItem('ftf_custom_v4'));
+                if (Array.isArray(dadosLocais)) {
+                    listaDeMarretas = dadosLocais;
+                }
+            }
+
+            carregarCardsSalvos();
+        }
+
+        function carregarCardsSalvos() {
             const container = document.getElementById('container-cards');
             if (!container) return;
 
-            // Pega o termo de pesquisa, ou deixa vazio se não existir o elemento
             const barra = document.getElementById('barraPesquisa');
             const termoPesquisa = barra ? barra.value.toLowerCase() : "";
 
             const itensFiltrados = listaDeMarretas.filter(item => {
-                // Força a raridade a ser comparada sempre em minúsculo para não dar erro
                 const raridadeItem = (item.raridade || 'legendary').toLowerCase();
                 const bateRaridade = raridadeItem === raridadeAtual.toLowerCase();
                 const bateNome = (item.nome || "").toLowerCase().includes(termoPesquisa);
@@ -645,12 +911,8 @@
             atualizarNumbersVisuais();
         }
 
-
-                function reordenarArrayEGuardar() {
-            // 1. Pegamos todos os cards que NÃO SÃO da raridade atual (para não mexer neles)
+        function reordenarArrayEGuardar() {
             let listaLimpa = listaDeMarretas.filter(item => (item.raridade || 'legendary') !== raridadeAtual);
-            
-            // 2. Criamos uma lista temporária para colocar os cards da aba atual na ordem nova da tela
             let itensReordenadosDaAba = [];
 
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
@@ -658,18 +920,14 @@
                 const id = parseInt(cardHTML.getAttribute('data-id'));
                 const correspondente = listaDeMarretas.find(m => m.id === id);
                 if (correspondente) {
-                    itensReordenadosDaAba.push(correspondente); // Junta na ordem certinha que está na tela
+                    itensReordenadosDaAba.push(correspondente);
                 }
             });
             
-            // 3. JUNTAMOS as duas listas: as outras raridades + a raridade atual reordenada
             listaDeMarretas = [...listaLimpa, ...itensReordenadosDaAba];
-            
-            // 4. Salva de verdade no localStorage
             localStorage.setItem('ftf_custom_v4', JSON.stringify(listaDeMarretas));
             atualizarNumbersVisuais();
         }
-
 
         function atualizarNumbersVisuais() {
             const cardsNaTela = document.querySelectorAll('#container-cards > div');
@@ -685,6 +943,7 @@
             });
         }
 
+        window.onload = inicializarBancoDados;
     </script>
 </body>
 </html>
